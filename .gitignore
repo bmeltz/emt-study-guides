@@ -1,0 +1,11 @@
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+.vscode
+*build
+*.qtcreator
+.qtcreator
+*build/
+*.user 
