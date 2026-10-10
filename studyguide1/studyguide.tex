@@ -859,6 +859,129 @@ So
 \[
 V(r) = V_0\,\frac{a}{r} \quad \text{for } r \geq a
 \]
+\newpage
+\usetikzlibrary{calc}
+\begin{center}
+\begin{tikzpicture}[>=stealth, scale=0.6]
+  \def\ra{2}
+  \def\rb{0.7}
+  \def\d{4.5}
+  \pgfmathsetmacro{\cx}{\ra+\d+\rb}
+  \draw (0,0) circle (\ra);
+  \draw (\cx,0) circle (\rb);
+  \draw (\ra,0) -- node[above] {$d$} (\ra+\d,0);
+  \draw (0,0) -- node[above left] {$a$} (60:\ra);
+  \draw (\cx,0) -- node[above left] {$b$} ++(60:\rb);
+  \draw[->] (2.1,-1.9) node[below right] {$\sigma_a$} -- (-40:\ra);
+  \draw[->] (\cx-0.9,-1.1) node[below left] {$\sigma_b$} -- ($(\cx,0)+(-135:\rb)$);
+\end{tikzpicture}
+\end{center}
+\noindent Two conducting spheres connected by wire. Whole thing is at the same potential, so
+\[
+\frac{Q_a}{4\pi\varepsilon_0 a} = \frac{Q_b}{4\pi\varepsilon_0 b}
+\quad\Rightarrow\quad
+Q_a = \frac{a}{b}Q_b
+\]
+\[
+\frac{\sigma_b}{\sigma_a} = \frac{E_n(b)}{E_n(a)} = \frac{a}{b} \gg 1
+\]
+\begingroup\sloppy
+
+\noindent Pollack \& Stump give the solution to Laplace's equation in spherical as
+\[
+V(r,\theta) = \frac{A}{r} + B + \frac{C\cos\theta}{r^{2}} + D\,r\cos\theta
+\]
+but where does this really come from? They give a term by term explanation but let's be more rigorous. To do that we will use Separation of Variables, so let's review that first.
+
+\medskip
+\noindent Separation of Variables technique to solve PDEs when $V$ or $\sigma$ is known on the boundaries of some region. We look for solutions which are products of functions that only depend on one of the variables. Griffith's says the algebraic details are formidable and teaches via examples. Personally, I think a full derivation of this method sounds interesting, but it's a problem for another day.
+
+\medskip
+\noindent First, construct
+\[
+V(x,y,z) = X(x)\,Y(y)\,Z(z) \qquad \text{where } \nabla^{2}V = 0
+\]
+linear combinations of these separable solutions can solve any boundary value problem with rectangular boundaries.
+\[
+\frac{1}{X}\frac{d^{2}X}{dx^{2}}\,YZ + \frac{1}{Y}\frac{d^{2}Y}{dy^{2}} + \frac{1}{Z}\frac{d^{2}Z}{dz^{2}} = 0
+\]
+Only way for this to be true for all $x,y,z$ is if
+\[
+\frac{1}{X}\frac{d^{2}X}{dx^{2}} = \kappa_1^{2}
+\qquad
+\frac{1}{Y}\frac{d^{2}Y}{dy^{2}} = \kappa_2^{2}
+\qquad
+\frac{1}{Z}\frac{d^{2}Z}{dz^{2}} = \kappa_3^{2}
+\]
+where
+\[
+\kappa_1^{2} + \kappa_2^{2} + \kappa_3^{2} = 0
+\]
+$\kappa_1, \kappa_2, \kappa_3$ may be real or imaginary (at least one of each!)
+
+\bigskip
+\noindent
+\[
+\frac{1}{X}\frac{d^{2}X}{dx^{2}} = \kappa_1^{2} \quad\Rightarrow\quad X'' = \kappa_1^{2}X
+\]
+which function is a constant times itself?
+\[
+\frac{d}{dx}e^{sx} = s\,e^{sx} \qquad \text{so try } X = e^{sx}
+\]
+\[
+s^{2}e^{sx} = \kappa_1^{2}e^{sx} \qquad \text{so } s = \pm \kappa_1
+\]
+\[
+X(x) = C_1 e^{\kappa_1 x} + D_1 e^{-\kappa_1 x} \qquad \text{likewise for } Y \text{ and } Z
+\]
+
+\medskip
+\noindent If $\kappa_1 \in \mathbb{R}$,
+\begin{list}{}{\setlength{\leftmargin}{2em}\setlength{\topsep}{0pt}\setlength{\parsep}{0pt}}
+\item[]
+if $x$ is bounded
+\[
+X(x) = C_1'\cosh \kappa_1 x + D_1'\sinh \kappa_1 x
+\]
+if $x \to +\infty$ is in the system use
+\[
+X(x) = D_1 e^{-\kappa_1 x}
+\]
+if $x \to -\infty$ is in the system use
+\[
+X(x) = C_1 e^{\kappa_1 x}
+\]
+if potential is even in $x$
+\[
+X(x) = C_1'\cosh \kappa_1 x
+\]
+odd in $x$
+\[
+X(x) = D_1'\sinh(\kappa_1 x)
+\]
+\end{list}
+
+\medskip
+\noindent If $\kappa_1$ is imaginary ($\kappa_1 \in \mathbb{C}$) we can write
+\begin{list}{}{\setlength{\leftmargin}{2em}\setlength{\topsep}{0pt}\setlength{\parsep}{0pt}}
+\item[]
+\[
+X(x) = C_1''\cos k_1 x + D_1''\sin k_1 x \qquad \text{where } |\kappa_1| = k_1
+\]
+potential even in $x$:
+\[
+X(x) = C_1''\cos k_1 x
+\]
+odd in $x$:
+\[
+X(x) = D_1''\sin k_1 x
+\]
+\end{list}
+
+\endgroup
+
+
+
 
 
 \newpage
@@ -871,7 +994,24 @@ V(r) = V_0\,\frac{a}{r} \quad \text{for } r \geq a
   \refstepcounter{problem}%
   \subsection{Problem \theproblem\ifx&#1&\else\ (#1)\fi}%
 }
-% \problem[Topic]
+\problem[]
+\begin{center}
+\begin{tikzpicture}[>=stealth]
+  \def\s{3.2}
+  \draw[->] (0,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,2.4) node[above] {$y$};
+  \coordinate (B) at (-\s/2,-1.05);
+  \coordinate (C) at ( \s/2,-1.05);
+  \coordinate (A) at (0,{-1.05+\s*sqrt(3)/2});
+  \draw[dashed] (A) -- (B) -- (C) -- cycle;
+  \fill (A) circle (1.5pt) node[left] {$1$};
+  \fill (B) circle (1.5pt) node[left] {$2$};
+  \fill (C) circle (1.5pt) node[right] {$3$};
+  \node[right] at (0,0.9) {$a$};
+\end{tikzpicture}
+\end{center}
+Three identical charges form an equilateral triangle in the $x$-$y$ plane. Find the electric field $\bar{E}$ and potential $V$ at any point $\bar{x}$ in the $xy$ plane.
+Can you do it for any point in 3D space?
 % Problem statement here.
 %
 % \problem[Topic]
